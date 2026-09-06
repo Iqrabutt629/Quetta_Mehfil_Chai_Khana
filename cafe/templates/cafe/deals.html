@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <title>Deals - Quetta Mehfil</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f8f8; margin: 0; text-align: center; }
+
+        .header { background-color: #d32f2f; padding: 0 20px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; height: 56px; box-shadow: 0px 2px 5px rgba(0,0,0,0.2); box-sizing: border-box; }
+
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 16px; position: absolute; left: 20px; z-index: 10002; }
+        .hamburger span { height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px; }
+
+        .header h2 { color: #ffffff; margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; width: 100%; text-align: center; }
+
+        #leftSidebar { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #b71c1c; z-index: 10005; transition: 0.3s ease; padding-top: 20px; box-shadow: 2px 0px 10px rgba(0,0,0,0.3); box-sizing: border-box; }
+        #leftSidebar .close-btn { color: #ffffff; font-size: 24px; position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: bold; }
+        #leftSidebar .links { margin-top: 60px; display: flex; flex-direction: column; }
+        #leftSidebar .links a { color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500; text-align: left; display: block; }
+        #leftSidebar .links a:hover { background-color: rgba(255,255,255,0.1); }
+
+        #sidebarOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); z-index: 10004; }
+
+        .deals-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 90px 20px 40px 20px; }
+
+        .deal-card { 
+            background: white; width: 280px; padding: 20px; 
+            border-radius: 15px; border-top: 5px solid #d32f2f;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s;
+            box-sizing: border-box;
+        }
+        .deal-card:hover { transform: translateY(-10px); }
+        .deal-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; background-color: #eee; }
+        .deal-card h2 { color: #d32f2f; margin-top: 0; font-size: 20px; }
+        .deal-card p { color: #555; font-size: 14px; min-height: 50px; }
+        .price { font-size: 24px; font-weight: bold; color: #222; margin: 15px 0; }
+        .btn-order { background: #d32f2f; color: white; padding: 10px 25px; border-radius: 20px; text-decoration: none; font-weight: bold; display: inline-block; border: none; cursor: pointer; font-size: 15px; }
+        .btn-order:hover { background: #b71c1c; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="hamburger" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+    </div>
+    <h2>Deals</h2>
+</div>
+
+<div id="leftSidebar">
+    <div class="close-btn" onclick="toggleSidebar()">&times;</div>
+    <div class="links">
+  <a href="{% url 'welcome' %}">Welcome</a>
+  <a href="{% url 'menu' %}">Menu</a>
+  <a href="{% url 'mood_prompt' %}">Mood Recommendation</a>
+  <a href="{% url 'deals' %}" style="background-color: rgba(255,255,255,0.1); border-left: 4px solid #ffffff;">Deals</a>
+  <a href="{% url 'view_cart' %}">Add to Cart</a>
+  <a href="{% url 'favourites' %}">My Favorites</a>
+  <a href="{% url 'about_us' %}">About Us</a>
+  <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>
+
+<div id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+
+<div class="deals-container">
+    {% for deal in deals %}
+    <div class="deal-card">
+        {% if deal.image %}
+            <img src="{{ deal.image.url }}" alt="{{ deal.title }}">
+        {% endif %}
+        <h2>{{ deal.title|upper }}</h2>
+        <p>{{ deal.description }}</p>
+        <div class="price">Rs. {{ deal.price }}</div>
+        <a href="{% url 'add_to_cart' deal.title %}" class="btn-order">Add to Cart</a>
+    </div>
+    {% empty %}
+        <p style="color: #999;">Filhal koi deals available nahi hain.</p>
+    {% endfor %}
+</div>
+
+<script>
+function toggleSidebar() {
+    var sidebar = document.getElementById("leftSidebar");
+    var overlay = document.getElementById("sidebarOverlay");
+    if (sidebar.style.left === "0px") {
+        sidebar.style.left = "-250px";
+        overlay.style.display = "none";
+    } else {
+        sidebar.style.left = "0px";
+        overlay.style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
