@@ -1,0 +1,68 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <title>Quetta Mehfil - Welcome</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: #fff; text-align: center; }
+        
+        
+        nav { background: #d32f2f; padding: 20px 0; text-align: center; width: 100%; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        nav a { color: white !important; margin: 0 30px; text-decoration: none; font-size: 18px; font-weight: bold; text-transform: uppercase; }
+        nav a:hover { color: #ffe0e0 !important; }
+
+        
+        .welcome-header { padding: 40px 20px; }
+        .urdu-title { font-size: 45px; color: #d32f2f; margin: 15px 0; font-weight: bold; }
+        
+        .category-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; padding: 20px; }
+        .cat-item { text-decoration: none; color: #333; width: 140px; }
+        .cat-circle { width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 2px solid #eee; margin-bottom: 10px; transition: 0.3s; }
+        .cat-circle:hover { transform: scale(1.05); border-color: #d32f2f; }
+        .cat-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn-order { display: inline-block; margin: 30px 0 50px; padding: 15px 50px; background: #d32f2f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/welcome/">Welcome</a>
+        <a href="/menu/">Menu</a>
+        <a href="/deals/">Deals</a> 
+        <a href="/cart/">Cart</a>
+        <a href="/about_us/">About us</a>
+    </nav>
+
+    <div class="welcome-header">
+        <img src="{% static 'cafe/logo.jpg' %}" style="width: 100px; border-radius: 50%;">
+        <div style="font-size: 16px; color: #666; letter-spacing: 3px; margin-top: 15px;">WELCOME TO</div>
+        <div class="urdu-title">کوئٹہ محفل چائے خانہ</div>
+    </div>
+
+    <div class="category-container">
+        <a href="/menu/#chai" class="cat-item">
+            <div class="cat-circle"><img src="{% static 'cafe/chai_cup.png' %}"></div>
+            <div style="font-weight:bold;">KHAAS CHAI</div>
+        </a>
+        <a href="/menu/#meetha" class="cat-item">
+            <div class="cat-circle"><img src="{% static 'cafe/meetha.jpeg' %}"></div>
+            <div style="font-weight:bold;">MEETHA PARATHA</div>
+        </a>
+        <a href="/menu/#masala" class="cat-item">
+            <div class="cat-circle"><img src="{% static 'cafe/masala.jpg' %}"></div>
+            <div style="font-weight:bold;">MASALA PARATHA</div>
+        </a>
+        <a href="/menu/#omelette" class="cat-item">
+            <div class="cat-circle"><img src="{% static 'cafe/omelette.jpeg' %}"></div>
+            <div style="font-weight:bold;">OMELETTES</div>
+        </a>
+    </div>
+
+<a href="{% url 'login' %}" class="btn-order">LOG IN TO ORDER</a>
+    
+
+</body>
+</html>
