@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - کوئٹہ محفل چائے خانہ</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            margin: 0; 
+            background-color: #fafafa; 
+            color: #333;
+            text-align: center; 
+        }
+
+        .about-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .about-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d32f2f;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .about-text {
+            direction: rtl;
+            text-align: justify;
+            text-justify: inter-word;
+            font-size: 16px;
+            line-height: 2;
+            color: #444;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .features-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: #fff5f5;
+            padding: 20px;
+            border-radius: 8px;
+            width: 240px;
+            border-top: 4px solid #d32f2f;
+        }
+
+        .feature-card h3 {
+            color: #d32f2f;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #d32f2f;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div style="background-color: #d32f2f; padding: 0 20px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; height: 56px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0px 2px 5px rgba(0,0,0,0.2); box-sizing: border-box;">
+    
+    <div onclick="toggleSidebar()" style="cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 16px; position: absolute; left: 20px; z-index: 10002;">
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+    </div>
+
+    <div style="width: 100%; text-align: center;">
+        <h2 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">
+            About Us
+        </h2>
+    </div>
+</div>
+
+<div id="leftSidebar" style="position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #b71c1c; z-index: 10005; transition: 0.3s ease; padding-top: 20px; box-shadow: 2px 0px 10px rgba(0,0,0,0.3); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;">
+    <div onclick="toggleSidebar()" style="color: #ffffff; font-size: 24px; position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: bold;">
+        &times;
+    </div>
+
+    <div style="margin-top: 60px; display: flex; flex-direction: column; text-align: left;">
+        <a href="/welcome/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Welcome</a>
+        <a href="/menu/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Menu</a>
+        <a href="/mood-prompt/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Mood Recommendation</a>
+        <a href="/deals/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Deals</a>
+        <a href="/favourites/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Favourites</a>
+        <a href="/cart/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Add to Cart</a>
+        <a href="/about_us/" style="color: white; background-color: rgba(255,255,255,0.1); padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500; border-left: 4px solid #ffffff;">About Us</a>
+        <a href="/logout/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500; margin-top: 30px;">Logout</a>
+    </div>
+</div>
+
+<div id="sidebarOverlay" onclick="toggleSidebar()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); z-index: 10004;"></div>
+
+<div class="about-container" style="margin-top: 90px;">
+    <img src="{% static 'cafe/logo.jpg' %}" alt="Logo" class="about-logo">
+    <h1>کوئٹہ محفل چائے خانہ</h1>
+    <div class="tagline">سکون کی تلاش ہے؟ تو آئیے، ہماری محفل میں بیٹھیں۔</div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>خالص ذائقہ</h3>
+            <p>روایتی اور پرانے دیسی طریقوں سے تیار کردہ بہترین اور معیاری اشیاء۔</p>
+        </div>
+        <div class="feature-card">
+            <h3>پرسکون ماحول</h3>
+            <p>دوستوں اور فیملی کے ساتھ بیٹھنے اور یادگار لمحات گزارنے کی بہترین جگہ۔</p>
+        </div>
+        <div class="feature-card">
+            <h3>معیاری خدمت</h3>
+            <p>گرما گرم اور تازہ کھانوں کی بروقت اور بہترین سروس آپ کی خدمت میں۔</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Quetta Mehfil Chai Khana. All Rights Reserved.</p>
+</footer>
+
+<script>
+    function toggleSidebar() {
+        var sidebar = document.getElementById("leftSidebar");
+        var overlay = document.getElementById("sidebarOverlay");
+        if (sidebar.style.left === "0px") {
+            sidebar.style.left = "-250px";
+            overlay.style.display = "none";
+        } else {
+            sidebar.style.left = "0px";
+            overlay.style.display = "block";
+        }
+    }
+</script>
+<style>
+    #leftSidebar a:hover {
+        color: #ffffff !important;
+        background-color: rgba(255,255,255,0.05);
+        padding-left: 30px !important;
+        transition: 0.2s;
+    }
+</style>
+
+</body>
+</html>
