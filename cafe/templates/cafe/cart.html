@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add to Cart - Quetta Mehfil</title>
+</head>
+<body style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+<div style="background-color: #d32f2f; padding: 0 20px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; height: 56px; box-shadow: 0px 2px 5px rgba(0,0,0,0.2); box-sizing: border-box;">
+    
+    <div onclick="toggleSidebar()" style="cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 16px; position: absolute; left: 20px; z-index: 10002;">
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+    </div>
+
+    <div style="width: 100%; text-align: center;">
+        <h2 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; display: inline-block;">
+            Add to Cart ({{ count }} Items)
+        </h2>
+    </div>
+</div>
+
+<div id="leftSidebar" style="position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #b71c1c; z-index: 10005; transition: 0.3s ease; padding-top: 20px; box-shadow: 2px 0px 10px rgba(0,0,0,0.3); box-sizing: border-box;">
+    <div onclick="toggleSidebar()" style="color: #ffffff; font-size: 24px; position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: bold;">
+        &times;
+    </div>
+
+    <div style="margin-top: 60px; display: flex; flex-direction: column;">
+        <a href="{% url 'welcome' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Welcome</a>
+        <a href="{% url 'menu' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Menu</a>
+        <a href="{% url 'mood_prompt' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Mood Recommendation</a>
+        <a href="{% url 'deals' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Deals</a>
+        <a href="{% url 'view_cart' %}" style="color: white ; background-color: rgba(255,255,255,0.1); padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500; border-left: 4px solid #ffffff;">Add to Cart</a>
+        <a href="{% url 'favourites' %}" style="color: white ; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Favourites</a>
+        <a href="{% url 'about_us' %}" style="color: #ffffff; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">About Us</a>
+        <a href="{% url 'logout' %}" style="color: #ffffff; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500; margin-top: 30px;">Logout</a>
+    </div>
+</div>
+
+<div id="sidebarOverlay" onclick="toggleSidebar()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); z-index: 10004;"></div>
+
+<div style="padding: 80px 40px 40px 40px;">
+    {% if items %}
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr style="background-color: #f8f9fa; border-bottom: 2px solid #ddd;">
+                <th style="padding: 15px; text-align: left;">Item</th>
+                <th style="padding: 15px; text-align: center;">Price</th>
+                <th style="padding: 15px; text-align: center;">Action</th>
+            </tr>
+            {% for item in items %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 15px; display: flex; align-items: center;">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" style="width: 60px; height: 60px; border-radius: 5px; margin-right: 15px; object-fit: cover;">
+                    {% endif %}
+                    <strong>{{ item.name }}</strong>
+                </td>
+                <td style="padding: 15px; text-align: center;">Rs. {{ item.price }}</td>
+                <td style="padding: 15px; text-align: center;">
+                    <a href="{% url 'decrease_cart_item' item.name %}" style="display: inline-block; width: 26px; height: 26px; line-height: 26px; text-align: center; background: #eee; color: #333; text-decoration: none; border-radius: 5px; font-weight: bold;">−</a>
+                    <span style="margin: 0 10px; font-weight: bold;">{{ item.quantity }}</span>
+                    <a href="{% url 'increase_cart_item' item.name %}" style="display: inline-block; width: 26px; height: 26px; line-height: 26px; text-align: center; background: #d32f2f; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">+</a>
+                </td>
+                <td style="padding: 15px; text-align: center;">Rs. {{ item.subtotal }}</td>
+                <td style="padding: 15px; text-align: center;">
+                    <a href="{% url 'remove_from_cart' item.name %}" style="color: #d32f2f; text-decoration: none; font-weight: bold;">
+                         Remove
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div style="text-align: right; margin-top: 30px;">
+            <h3>Total Bill: <span style="color: #28a745;">Rs. {{ total }}</span></h3>
+            <a href="{% url 'menu' %}" style="padding: 10px 20px; text-decoration: none; color: #333; border: 1px solid #ccc; border-radius: 5px; margin-right: 10px;">+ Add More</a>
+            <a href="{% url 'place_order' %}" style="padding: 12px 25px; text-decoration: none; color: white; background-color: #d32f2f; border-radius: 5px; font-weight: bold;">Checkout Now →</a>
+        </div>
+    {% else %}
+        <div style="text-align: center; margin-top: 50px;">
+            <p style="font-size: 18px; color: #666;">Empty cart!</p>
+            <a href="{% url 'menu' %}" style="color: #d32f2f; font-weight: bold; text-decoration: none;">Back to Menu</a>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    function toggleSidebar() {
+        var sidebar = document.getElementById("leftSidebar");
+        var overlay = document.getElementById("sidebarOverlay");
+        if (sidebar.style.left === "0px") {
+            sidebar.style.left = "-250px";
+            overlay.style.display = "none";
+        } else {
+            sidebar.style.left = "0px";
+            overlay.style.display = "block";
+        }
+    }
+</script>
+<style>
+    #leftSidebar a:hover {
+        color: #ffffff !important;
+        background-color: rgba(255,255,255,0.05);
+        padding-left: 30px !important;
+        transition: 0.2s;
+    }
+</style>
+
+</body>
+</html>
