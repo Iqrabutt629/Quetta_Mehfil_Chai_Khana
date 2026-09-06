@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quetta Mehfil- Full Menu</title>
+   
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f8f8; margin: 0; padding-bottom: 50px; }
+        /* position: sticky ko position: relative kiya hai taake iske andar dropdown bilkul sahi position par khule */
+        .header { background: #d32f2f; color: white; padding: 15px; text-align: center; position: relative; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .container { max-width: 600px; margin: auto; padding: 10px; }
+        
+        .category-header { 
+            background: #fff; color: #d32f2f; padding: 12px; margin: 25px 0 10px; 
+            border-left: 6px solid #d32f2f; font-weight: bold; font-size: 22px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 0 8px 8px 0;
+        }
+
+        .menu-item { 
+            display: flex; align-items: center; background: white; 
+            margin-bottom: 10px; padding: 12px; border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: 0.3s;
+        }
+        .menu-item:hover { transform: scale(1.02); }
+        .item-img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; margin-right: 15px; border: 1px solid #eee; background: #fafafa; }
+        .item-details { flex-grow: 1; }
+        .item-name { font-weight: bold; font-size: 16px; color: #333; display: block; }
+        .item-price { color: #d32f2f; font-weight: bold; font-size: 17px; }
+        .add-btn { background: #d32f2f; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div style="background-color: #d32f2f; padding: 0 20px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; height: 56px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0px 2px 5px rgba(0,0,0,0.2); box-sizing: border-box;">
+    
+    <div onclick="toggleSidebar()" style="cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 16px; position: absolute; left: 20px; z-index: 10002;">
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+        <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
+    </div>
+
+    <div style="width: 100%; text-align: center;">
+        <h2 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">
+            Menu
+        </h2>
+    </div>
+</div>
+
+<div id="leftSidebar" style="position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #b71c1c; z-index: 10005; transition: 0.3s ease; padding-top: 20px; box-shadow: 2px 0px 10px rgba(0,0,0,0.3); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;">
+    <div onclick="toggleSidebar()" style="color: #ffffff; font-size: 24px; position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: bold;">
+        &times;
+    </div>
+
+    <div style="margin-top: 60px; display: flex; flex-direction: column;">
+        <a href="/welcome/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Welcome</a>
+        <a href="/menu/" style="color: white; background-color: rgba(255,255,255,0.1); padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500; border-left: 4px solid #ffffff;">Menu</a>
+        <a href="/mood-prompt/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Mood Recommendation</a>
+        <a href="/deals/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Deals</a>
+        <a href="/favourites/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Favourites</a>
+        <a href="/cart/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">Add to Cart</a>
+        <a href="/about_us/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500;">About Us</a>
+        <a href="/logout/" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 18px; font-weight: 500; margin-top: 30px;">Logout</a>
+    </div>
+</div>
+
+<div id="sidebarOverlay" onclick="toggleSidebar()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); z-index: 10004;"></div>
+
+<script>
+    function toggleSidebar() {
+        var sidebar = document.getElementById("leftSidebar");
+        var overlay = document.getElementById("sidebarOverlay");
+        if (sidebar.style.left === "0px") {
+            sidebar.style.left = "-250px";
+            overlay.style.display = "none";
+        } else {
+            sidebar.style.left = "0px";
+            overlay.style.display = "block";
+        }
+    }
+</script>
+<style>
+    #leftSidebar a:hover {
+        color: #ffffff !important;
+        background-color: rgba(255,255,255,0.05);
+        padding-left: 30px !important;
+        transition: 0.2s;
+    }
+</style>
+
+<div class="container" style="padding-top: 70px;">
+    {% for key, data in items_by_category.items %}
+        <div id="{{ key }}" class="category-header">{{ data.label }}</div>
+
+        {% for item in data.items %}
+        <div class="menu-item">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" class="item-img">
+            {% endif %}
+            <div class="item-details">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-price">Rs. {{ item.price }}</span>
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 15px;">
+                <a href="{% url 'add_to_favourites' item.name %}" style="text-decoration: none; font-size: 24px; color: #d32f2f;">♡</a>
+                <a href="{% url 'add_to_cart' item.name %}" class="add-btn" style="text-decoration: none;">+</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+</body>
+</html>
