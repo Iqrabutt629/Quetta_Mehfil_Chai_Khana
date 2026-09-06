@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logged Out - Quetta Mehfil</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); text-align: center; max-width: 380px; }
+        h2 { color: #d32f2f; margin-bottom: 10px; }
+        p { color: #666; line-height: 1.6; margin-bottom: 25px; }
+        .btn { display: inline-block; background: #d32f2f; color: white; text-decoration: none; padding: 12px 30px; border-radius: 25px; font-weight: bold; }
+        .btn:hover { background: #b71c1c; }
+    </style>
+</head>
+<body style="margin:0; display:flex; flex-direction:column; min-height:100vh;">
+
+<div style="background-color: #d32f2f; color: white; padding: 15px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); box-sizing: border-box; width: 100%;">
+    <span style="color: #ffffff; margin:0; font-size: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; display: block;">Quetta Mehfil Chai Khana</span>
+</div>
+
+<div style="flex:1; display:flex; justify-content:center; align-items:center; padding: 30px 10px; box-sizing: border-box; width: 100%;">
+    <div class="box">
+        <h2>You are successfully logged out</h2>
+        <p>Login for again order.</p>
+        <a href="{% url 'login' %}" class="btn">Login</a>
+    </div>
+</div>
+
+<footer style="padding: 15px; background: #d32f2f; color: white; font-size: 14px; text-align:center; box-shadow: 0 -2px 10px rgba(248, 246, 246, 0.04); box-sizing: border-box; width: 100%;">
+    <p style="margin:0;">&copy; 2026 Quetta Mehfil Chai Khana. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
