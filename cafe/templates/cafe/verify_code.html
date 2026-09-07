@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Code</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: white; width: 350px; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(211, 47, 47, 0.1); text-align: center; padding: 30px; }
+        h2 { color: #d32f2f; text-transform: uppercase; margin: 20px 0; font-weight: bold; }
+        input { width: 90%; padding: 12px; border: 1px solid #eeeeee; border-radius: 10px; margin-bottom: 15px; outline: none; }
+        .btn { width: 90%; padding: 12px; background: #d32f2f; color: white; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        .error { color: red; font-size: 14px; }
+    </style>
+</head>
+<body style="margin:0; display:flex; flex-direction:column; min-height:100vh;">
+
+<div style="background-color: #d32f2f; color: white; padding: 15px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); box-sizing: border-box; width: 100%;">
+    <span style="color: #ffffff; margin:0; font-size: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; display: block;">Quetta Mehfil Chai Khana</span>
+</div>
+
+<div style="flex:1; display:flex; justify-content:center; align-items:center; padding: 30px 10px; box-sizing: border-box; width: 100%;">
+<div class="container">
+    <h2>Verify Code</h2>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="code" placeholder="6-digit code" required maxlength="6">
+        <button type="submit" class="btn">Verify</button>
+    </form>
+</div>
+</div>
+
+<footer style="padding: 15px; background: #d32f2f; color: white; font-size: 14px; text-align:center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); box-sizing: border-box; width: 100%;">
+    <p style="margin:0;">&copy; 2026 Quetta Mehfil Chai Khana. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
