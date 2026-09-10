@@ -8,7 +8,9 @@ admin.site.register(MenuItem)
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     
-    list_display = ('id', 'customer_name', 'total_amount', 'amount_paid', 'pending_amount', 'payment_method', 'payment_type', 'picking_time', 'phone')
+    list_display = ('id', 'customer_name', 'total_amount', 'amount_paid', 'pending_amount', 'payment_method', 'payment_type', 'status', 'picking_time', 'phone')
+
+    list_editable = ('status',)
     
     
     list_filter = ('picking_time', 'payment_method')
@@ -19,5 +21,5 @@ class OrderAdmin(admin.ModelAdmin):
     def pending_amount(self, obj):
         return obj.total_amount - obj.amount_paid
     pending_amount.short_description = 'Pending Amount'
-    
+
 admin.site.register(Deal)
