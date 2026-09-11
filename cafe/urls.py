@@ -1,0 +1,31 @@
+from django.urls import path
+from . import views  
+
+urlpatterns = [
+    path('welcome/', views.welcome_view, name='welcome'), 
+    path('about_us/', views.about_us_view, name='about_us'),
+    path('menu/', views.menu_view, name='menu'),
+    path('deals/', views.deals_view, name='deals'),
+    path('signup/', views.signup_view, name='signup'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    path('forgot-password/', views.forgot_password_view, name='forgot_password'),
+    path('verify-code/', views.verify_code_view, name='verify_code'),
+    path('reset-password/', views.reset_password_view, name='reset_password'),
+    path('mood_selector/', views.mood_selector, name='mood_selector'),
+    path('mood-prompt/', views.mood_prompt_view, name='mood_prompt'),
+    path('order-form/', views.order_form_view, name='place_order'),
+    path('order-success/<int:order_id>/', views.order_success, name='order_success'),
+    path('stripe-checkout/<int:order_id>/', views.stripe_checkout_view, name='stripe_checkout'),
+    path('payment-cancel/<int:order_id>/', views.payment_cancel_view, name='payment_cancel'),
+    path('favourites/', views.favourites_view, name='favourites'),
+    path('add-to-favourites/<str:name>/', views.add_to_favourites, name='add_to_favourites'),
+    path('remove-from-favourites/<str:name>/', views.remove_from_favourites, name='remove_from_favourites'),   
+    path('add_multiple_to_cart/', views.add_multiple_to_cart, name='add_multiple_to_cart'),
+    path('cart/', views.view_cart, name='view_cart'),
+    path('add_to_cart/<str:item_name>/', views.add_to_cart, name='add_to_cart'),
+    path('remove-from-cart/<str:item_name>/', views.remove_from_cart, name='remove_from_cart'),
+    path('increase-cart-item/<str:item_name>/', views.increase_cart_item, name='increase_cart_item'),
+    path('decrease-cart-item/<str:item_name>/', views.decrease_cart_item, name='decrease_cart_item'),
+]
