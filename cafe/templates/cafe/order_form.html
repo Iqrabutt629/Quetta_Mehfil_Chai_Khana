@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Order - Quetta Mehfil</title>
+    <style>
+        /* Dropdown ke andar custom red scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px !important;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1 !important;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e11a22 !important;
+            border-radius: 5px !important;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b31016 !important;
+        }
+    </style>
+</head>
+<body style="background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh;">
+
+<div style="background-color: #d32f2f; padding: 15px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); box-sizing: border-box; width: 100%;">
+    <span style="color: #ffffff; margin:0; font-size: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; display: block;">Quetta Mehfil Chai Khana</span>
+</div>
+
+<div style="flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; width: 100%;">
+
+    <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 450px; text-align: center; box-sizing: border-box;">
+        
+        <h2 style="color: #d32f2f; margin-bottom: 5px; font-size: 28px;">کوئٹہ محفل چائے خانہ</h2>
+        <p style="color: #666; margin-bottom: 30px;">Reserve your Quetta Mehfil experience</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 20px; text-align: left;">
+                <label style="font-weight: bold; color: #444; display: block; margin-bottom: 5px;">Your name:</label>
+                <input type="text" name="name" placeholder="e.g: Ahmed" required 
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px;">
+            </div>
+
+            <div style="margin-bottom: 20px; text-align: left;">
+                <label style="font-weight: bold; color: #444; display: block; margin-bottom: 5px;">Phone Number:</label>
+                <input type="text" name="phone" placeholder="03xx-xxxxxxx" required 
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px;">
+            </div>
+
+            
+            <!-- 3. Order List Field (Ab bilkul Name wale box jaisa white aur match hoga) -->
+<div style="margin-bottom: 20px; text-align: left;">
+    <label style="font-weight: bold; color: #444; display: block; margin-bottom: 5px;">Order List:</label>
+    <textarea name="order_list" 
+              style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-family: inherit; background-color: #ffffff; resize: none;" 
+              rows="2" readonly>{% if selected_item %}{{ selected_item }}{% endif %}</textarea>
+</div>
+
+<!-- 4. Total Bill Field (Ab bilkul white background aur same styling ke sath) -->
+<div style="margin-bottom: 20px; text-align: left;">
+    <label style="font-weight: bold; color: #444; display: block; margin-bottom: 5px;">Total Bill (Rs):</label>
+    <input type="text" name="total_bill" id="totalBillInput"
+           style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; background-color: #ffffff; font-weight: bold;" 
+           value="{% if selected_price %}{{ selected_price }}{% endif %}" readonly>
+</div>
+
+            <div style="margin-bottom: 30px; text-align: left;">
+                <label style="font-weight: bold; color: #d32f2f; display: block; margin-bottom: 5px;">Select your pickup time</label>
+                <div style="display: flex; gap: 10px;">
+                    <select name="pickup_hour" required style="width: 50%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; background: white;">
+                        <option value="" disabled selected>Hour</option>
+                        <option value="01">01 AM</option>
+                        <option value="02">02 AM</option>
+                        <option value="03">03 AM</option>
+                        <option value="04">04 AM</option>
+                        <option value="05">05 AM</option>
+                        <option value="06">06 AM</option>
+                        <option value="07">07 AM</option>
+                        <option value="08">08 AM</option>
+                        <option value="09">09 AM</option>
+                        <option value="10">10 AM</option>
+                        <option value="11">11 AM</option>
+                        <option value="12">12 PM</option>
+                        <option value="13">01 PM</option>
+                        <option value="14">02 PM</option>
+                        <option value="15">03 PM</option>
+                        <option value="16">04 PM</option>
+                        <option value="17">05 PM</option>
+                        <option value="18">06 PM</option>
+                        <option value="19">07 PM</option>
+                        <option value="20">08 PM</option>
+                        <option value="21">09 PM</option>
+                        <option value="22">10 PM</option>
+                        <option value="23">11 PM</option>
+                    </select>
+
+                    <select name="pickup_minute" required style="width: 50%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; background: white;">
+                        <option value="" disabled selected>Minute</option>
+                        <option value="00">00</option>
+                        <option value="05">05</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="45">45</option>
+                        <option value="50">50</option>
+                        <option value="55">55</option>
+                    </select>
+                </div>
+            </div>
+
+           {% if error %}
+    <p style="color: red; font-weight: bold; margin-bottom: 15px;">{{ error }}</p>
+{% endif %}
+
+<div style="margin-top: 15px; margin-bottom: 25px; border: 1px solid #ccc; padding: 15px; border-radius: 8px; text-align: left; box-sizing: border-box;">
+    <p style="margin-top: 0; font-weight: bold; color: #333;">Select Payment Method:</p>
+
+    <div id="cashOption">
+        <input type="radio" id="cash" name="payment_method" value="cash" onchange="paymentMethodChanged()">
+        <label for="cash" style="cursor: pointer; margin-left: 5px;">Cash on Pickup</label>
+    </div>
+
+    <div style="margin-top: 8px;">
+        <input type="radio" id="jazzcash" name="payment_method" value="stripe" onchange="paymentMethodChanged()">
+        <label for="jazzcash" style="cursor: pointer; margin-left: 5px;">Pay with Card (Stripe)</label>
+    </div>
+
+    <div id="jazzcashOptions" style="margin-top: 10px; margin-left: 25px; display: none;">
+        <div>
+            <input type="radio" id="fullPayment" name="payment_type" value="full" checked>
+            <label for="fullPayment" style="cursor: pointer; margin-left: 5px;">Full Payment</label>
+        </div>
+        <div id="halfPaymentOption" style="margin-top: 5px;">
+            <input type="radio" id="halfPayment" name="payment_type" value="half">
+            <label for="halfPayment" style="cursor: pointer; margin-left: 5px;">Half Payment (Advance)</label>
+        </div>
+    </div>
+
+    <p id="paymentWarning" style="color: red; margin-top: 12px; margin-bottom: 0; font-weight: bold; font-size: 14px; line-height: 1.4; display: none;">
+        ⚠️ Aapka bill Rs. 2000 ya us se zyada hai, isliye Cash on Pickup available nahi hai. Card se kam se kam Half Payment advance karni hogi (Full bhi kar sakte hain).
+    </p>
+</div>
+
+<p id="formError" style="color: red; font-weight: bold; display: none;"></p>
+            <button type="submit" style="width: 100%; background: #d32f2f; color: white; padding: 15px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+                PLACE ORDER NOW
+            </button>
+        </form>
+    </div>
+
+    <script>
+function getTotal() {
+    var val = document.getElementById('totalBillInput').value;
+    var num = parseFloat(val);
+    return isNaN(num) ? 0 : num;
+}
+
+function paymentMethodChanged() {
+    var jazzchecked = document.getElementById('jazzcash').checked;
+    document.getElementById('jazzcashOptions').style.display = jazzchecked ? 'block' : 'none';
+}
+
+function setupPaymentOptions() {
+    var total = getTotal();
+    var cashOption = document.getElementById('cashOption');
+    var warning = document.getElementById('paymentWarning');
+    var halfPaymentDiv = document.getElementById('halfPaymentOption');
+
+    if (total >= 2000) {
+        cashOption.style.display = 'none';
+        warning.style.display = 'block';
+        halfPaymentDiv.style.display = 'block';
+        document.getElementById('jazzcash').checked = true;
+        document.getElementById('jazzcashOptions').style.display = 'block';
+    } else {
+        cashOption.style.display = 'block';
+        warning.style.display = 'none';
+        halfPaymentDiv.style.display = 'none';
+        document.getElementById('fullPayment').checked = true;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', setupPaymentOptions);
+
+document.querySelector('form').addEventListener('submit', function(e) {
+    var total = getTotal();
+    var selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    var errorEl = document.getElementById('formError');
+
+    if (!selectedMethod) {
+        e.preventDefault();
+        errorEl.textContent = "Please select a payment method.";
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    if (total >= 2000 && selectedMethod.value === 'cash') {
+        e.preventDefault();
+        errorEl.textContent = "Cash is not allowed for orders 2000 or more. Please pay via JazzCash.";
+        errorEl.style.display = 'block';
+    }
+});
+</script>
+
+</div>
+
+<footer style="padding: 15px; background: #d32f2f; color: white; font-size: 14px; text-align:center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); box-sizing: border-box; width: 100%;">
+    <p style="margin:0;">&copy; 2026 Quetta Mehfil Chai Khana. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
