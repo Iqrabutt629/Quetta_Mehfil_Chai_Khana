@@ -1,0 +1,1 @@
+web: gunicorn quetta_mehfil.wsgi
