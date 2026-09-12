@@ -23,7 +23,7 @@
             <p><strong>Items:</strong> {{ order.order_list }}</p>
             <p><strong>Total:</strong> Rs. {{ order.total_amount }}</p>
             <p><strong>Payment Method:</strong> {{ order.payment_method|title }}</p>
-            {% if order.payment_method == 'jazzcash' %}
+            {% if order.payment_method == 'stripe' %}
                 <p><strong>Payment Type:</strong> {{ order.payment_type|title }}</p>
                 <p><strong>Amount Paid:</strong> Rs. {{ order.amount_paid }}</p>
                 {% if order.payment_type == 'half' %}

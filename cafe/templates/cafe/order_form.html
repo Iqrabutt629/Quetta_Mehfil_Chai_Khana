@@ -126,11 +126,11 @@
     </div>
 
     <div style="margin-top: 8px;">
-        <input type="radio" id="jazzcash" name="payment_method" value="stripe" onchange="paymentMethodChanged()">
-        <label for="jazzcash" style="cursor: pointer; margin-left: 5px;">Pay with Card (Stripe)</label>
+        <input type="radio" id="stripe" name="payment_method" value="stripe" onchange="paymentMethodChanged()">
+        <label for="stripe" style="cursor: pointer; margin-left: 5px;">Pay with Card (Stripe)</label>
     </div>
 
-    <div id="jazzcashOptions" style="margin-top: 10px; margin-left: 25px; display: none;">
+    <div id="stripeOptions" style="margin-top: 10px; margin-left: 25px; display: none;">
         <div>
             <input type="radio" id="fullPayment" name="payment_type" value="full" checked>
             <label for="fullPayment" style="cursor: pointer; margin-left: 5px;">Full Payment</label>
@@ -161,8 +161,8 @@ function getTotal() {
 }
 
 function paymentMethodChanged() {
-    var jazzchecked = document.getElementById('jazzcash').checked;
-    document.getElementById('jazzcashOptions').style.display = jazzchecked ? 'block' : 'none';
+    var stripechecked = document.getElementById('stripe').checked;
+    document.getElementById('stripeOptions').style.display = stripechecked ? 'block' : 'none';
 }
 
 function setupPaymentOptions() {
@@ -175,8 +175,8 @@ function setupPaymentOptions() {
         cashOption.style.display = 'none';
         warning.style.display = 'block';
         halfPaymentDiv.style.display = 'block';
-        document.getElementById('jazzcash').checked = true;
-        document.getElementById('jazzcashOptions').style.display = 'block';
+        document.getElementById('stripe').checked = true;
+        document.getElementById('stripeOptions').style.display = 'block';
     } else {
         cashOption.style.display = 'block';
         warning.style.display = 'none';
@@ -201,7 +201,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 
     if (total >= 2000 && selectedMethod.value === 'cash') {
         e.preventDefault();
-        errorEl.textContent = "Cash is not allowed for orders 2000 or more. Please pay via JazzCash.";
+        errorEl.textContent = "Cash is not allowed for orders 2000 or more. Please pay via stripe.";
         errorEl.style.display = 'block';
     }
 });
