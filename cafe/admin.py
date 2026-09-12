@@ -13,7 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_editable = ('status',)
     
     
-    list_filter = ('picking_time', 'payment_method')
+    list_filter = ('picking_time', 'payment_method',  'status')
     
     
     search_fields = ('customer_name', 'phone')
