@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quetta Mehfil - Mood</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
@@ -14,19 +15,17 @@
 </head>
 <body>
 
-<div style="background-color: #d32f2f; padding: 0 20px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; height: 56px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0px 2px 5px rgba(0,0,0,0.2); box-sizing: border-box;">
+<div style="background-color: #d32f2f; padding: 0 50px; display: flex; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; min-height: 56px; z-index: 10000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0px 2px 5px rgba(0,0,0,0.2); box-sizing: border-box;">
     
-    <div onclick="toggleSidebar()" style="cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 16px; position: absolute; left: 20px; z-index: 10002;">
+    <div onclick="toggleSidebar()" style="cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 16px; position: absolute; left: 20px; top: 20px; z-index: 10002;">
         <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
         <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
         <span style="height: 3px; width: 100%; background-color: #ffffff; border-radius: 2px;"></span>
     </div>
 
-    <div style="width: 100%; text-align: center;">
-        <h2 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">
+        <h2 style="color: #ffffff; margin: 10px 0; font-size: 18px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; text-align: center;">
             Mood Recommendation
         </h2>
-    </div>
 </div>
 
 <div id="leftSidebar" style="position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #b71c1c; z-index: 10005; transition: 0.3s ease; padding-top: 20px; box-shadow: 2px 0px 10px rgba(0,0,0,0.3); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;">

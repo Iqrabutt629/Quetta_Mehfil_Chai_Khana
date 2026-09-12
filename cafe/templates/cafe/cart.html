@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add to Cart - Quetta Mehfil</title>
 </head>
 <body style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -73,10 +74,10 @@
             {% endfor %}
         </table>
 
-        <div style="text-align: right; margin-top: 30px;">
-            <h3>Total Bill: <span style="color: #28a745;">Rs. {{ total }}</span></h3>
-            <a href="{% url 'menu' %}" style="padding: 10px 20px; text-decoration: none; color: #333; border: 1px solid #ccc; border-radius: 5px; margin-right: 10px;">+ Add More</a>
-            <a href="{% url 'place_order' %}" style="padding: 12px 25px; text-decoration: none; color: white; background-color: #d32f2f; border-radius: 5px; font-weight: bold;">Checkout Now →</a>
+        <div style="text-align: right; margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px;">
+            <h3 style="width: 100%; text-align: right;">Total Bill: <span style="color: #28a745;">Rs. {{ total }}</span></h3>
+                <a href="{% url 'menu' %}" style="padding: 10px 20px; text-decoration: none; color: #333; border: 1px solid #ccc; border-radius: 5px; white-space: nowrap; box-sizing: border-box;">+ Add More</a>
+                <a href="{% url 'place_order' %}" style="padding: 12px 25px; text-decoration: none; color: white; background-color: #d32f2f; border-radius: 5px; font-weight: bold; white-space: nowrap; box-sizing: border-box;">Checkout Now →</a>
         </div>
     {% else %}
         <div style="text-align: center; margin-top: 50px;">
