@@ -1,1 +1,1 @@
-web: gunicorn quetta_mehfil.wsgi
+web: python manage.py migrate && gunicorn quetta_mehfil.wsgi
