@@ -66,8 +66,11 @@ def signup_view(request):
         if User.objects.filter(email=email).exists():
             return render(request, 'cafe/signup.html', {'error': 'Email is already registere.'})
 
-        if User.objects.filter(username=username).exists():
-            return render(request, 'cafe/signup.html', {'error': 'Username is already exsite.'})
+        base_username = username
+        counter = 1
+        while User.objects.filter(username=username).exists():
+            counter += 1
+            username = f"{base_username}{counter}"
         
         user = User.objects.create_user(username=username, email=email, password=password)
         user.is_active = False 

@@ -114,16 +114,12 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = 'quettamehfilchaikhana90@gmail.com' 
-
-EMAIL_HOST_PASSWORD = 'dlxliylzonhhlsjd'
 LOGIN_URL = 'login'
+BREVO_API_KEY = os.environ.get(
+    'BREVO_API_KEY',
+    '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'
+)
+DEFAULT_FROM_EMAIL = 'quettamehfilchaikhana90@gmail.com'
 
 STRIPE_PUBLISHABLE_KEY = "pk_test_51UEC2OPF7wHpvTuBjYx7o4t5KVXzYehjO328BvPaM9fYzUmIlenBZO7emBpCvvcHGOZyt6HDYpbD89rSDQOxZTPY00rQgEZ2Jp"
 STRIPE_SECRET_KEY = "sk_test_51UEC2OPF7wHpvTuBmN4si7F296VQMThBsmEgT8U6abZB8958H89HK4lGiMTM46xffQTda7NLcjNRKk73b8N5449600oqmfycqI"
