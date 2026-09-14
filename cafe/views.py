@@ -15,9 +15,26 @@ import hashlib
 import hmac
 import re
 from datetime import datetime
+import requests
+import os
 import stripe
 from django.conf import settings
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+def send_email_via_brevo(subject, message, to_email):
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {
+        "accept": "application/json",
+        "api-key": os.environ.get('BREVO_API_KEY'),
+        "content-type": "application/json"
+    }
+    data = {
+        "sender": {"name": "Quetta Mehfil", "email": "quettamehfilchaikhana90@gmail.com"},
+        "to": [{"email": to_email}],
+        "subject": subject,
+        "htmlContent": f"<p>{message}</p>"
+    }
+    requests.post(url, json=data, headers=headers)
 
 def is_strong_password(password):
     if len(password) < 8:
@@ -65,8 +82,7 @@ def signup_view(request):
             'token': account_activation_token.make_token(user),
         })
         
-        email_to_send = EmailMessage(mail_subject, message, to=[email])
-        email_to_send.send()
+        send_email_via_brevo(mail_subject, message, email)
         
         return render(request, 'cafe/signup_success.html')
         
@@ -126,12 +142,11 @@ def forgot_password_view(request):
         code = PasswordResetCode.generate_code()
         PasswordResetCode.objects.create(user=user, code=code)
 
-        email_to_send = EmailMessage(
+        send_email_via_brevo(
             'Password Reset Code - Quetta Mehfil',
             f'Aapka verification code hai: {code}\nYe 10 minute tak valid hai.',
-            to=[email]
+            email
         )
-        email_to_send.send()
 
         request.session['reset_email'] = email
 
