@@ -1,68 +1,319 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="ur">
 <head>
     <meta charset="UTF-8">
-    <title>Quetta Mehfil - Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quetta Mehfil Chai Khana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: #fff; text-align: center; }
-        
-        
-        nav { background: #d32f2f; padding: 20px 0; text-align: center; width: 100%; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        nav a { color: white !important; margin: 0 30px; text-decoration: none; font-size: 18px; font-weight: bold; text-transform: uppercase; }
-        nav a:hover { color: #ffe0e0 !important; }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333333;
+            margin: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("{% static 'cafe/chai_pour_bg.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .urdu { font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; }
 
-        
-        .welcome-header { padding: 40px 20px; }
-        .urdu-title { font-size: 45px; color: #d32f2f; margin: 15px 0; font-weight: bold; }
-        
-        .category-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; padding: 20px; }
-        .cat-item { text-decoration: none; color: #333; width: 140px; }
-        .cat-circle { width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 2px solid #eee; margin-bottom: 10px; transition: 0.3s; }
-        .cat-circle:hover { transform: scale(1.05); border-color: #d32f2f; }
-        .cat-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .btn-brand {
+            background-color: #ffffff;
+            color: #d32f2f;
+            border-radius: 50px;
+            padding: 8px 22px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.25s ease;
+        }
+        .btn-brand:hover { background-color: #ffe0e0; }
+        .btn-outline {
+            border: 1.5px solid #ffffff;
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 8px 22px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.25s ease;
+        }
+        .btn-outline:hover { background-color: rgba(255,255,255,0.15); }
 
-        .btn-order { display: inline-block; margin: 30px 0 50px; padding: 15px 50px; background: #d32f2f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 18px; }
+        /* Top nav */
+        .topnav {
+            background-color: #d32f2f;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 100;
+        }
+        .nav-links { display: flex; gap: 26px; position: absolute; left: 50%; transform: translateX(-50%); }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .nav-links a:hover { color: #ffe0e0; }
+        .nav-auth { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 22px; height: 16px;
+            cursor: pointer;
+        }
+        .nav-hamburger span { height: 3px; background: #fff; border-radius: 2px; }
+
+        @media (max-width: 800px) {
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+        }
+
+        /* Carousel */
+        .carousel {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto 50px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .carousel-track { display: flex; transition: transform 0.6s ease; }
+        .carousel-slide { min-width: 100%; position: relative; }
+        .carousel-slide img { width: 100%; aspect-ratio: 2.2 / 1; height: auto; object-fit: cover; object-position: center 30%; filter: brightness(88%); display: block; }
+        .carousel-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.85); border: none;
+            width: 38px; height: 38px; border-radius: 50%;
+            font-size: 18px; cursor: pointer; color: #333;
+        }
+        .carousel-btn.prev { left: 12px; }
+        .carousel-btn.next { right: 12px; }
+
+        /* Categories */
+        .categories-wrap { max-width: 1000px; margin: 0 auto 50px; padding: 0 20px; }
+        .categories-title { text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 30px; }
+        .categories-title span { color: #d32f2f; }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .category-card {
+            background: #fff5f5;
+            border-radius: 14px;
+            text-align: center;
+            padding: 24px 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 24px rgba(211, 47, 47, 0.15);
+        }
+        .category-card img {
+            width: 90px; height: 90px; object-fit: cover;
+            border-radius: 50%; margin-bottom: 14px;
+            border: 2px solid #d32f2f;
+        }
+        .category-card h6 { margin: 0; font-weight: 700; font-size: 15px; }
+
+        /* Banner */
+        .blur-banner { max-width: 1000px; margin: 0 auto 50px; padding: 0 20px; }
+        .blur-banner-inner {
+            position: relative;
+            background-size: 100% 100%;
+            background-position: center;
+            height: 260px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+        }
+        .blur-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.45); backdrop-filter: blur(3px);
+        }
+        .blur-content { position: relative; z-index: 2; color: #fff; padding: 20px; }
+        .blur-content h2 { font-size: 24px; margin: 0 0 10px; }
+        .blur-content p { font-size: 14px; margin: 0; opacity: 0.9; }
+
+        /* Timing bar */
+        .timing-bar {
+            background-color: #d32f2f;
+            color: #ffffff;
+            padding: 28px 20px;
+            width: 100%;
+            margin-top: 50px;
+            margin-bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            text-align: center;
+            gap: 20px;
+        }
+        .timing-item h6 { margin: 6px 0 2px; font-size: 15px; }
+        .timing-item p { margin: 0; font-size: 13px; opacity: 0.9; }
+
+        @media (max-width: 700px) {
+            body { background-attachment: scroll; 
+            background-size: 100% auto;
+            background-position: top center;
+            background-color: #fffafa;
+        }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .blur-banner-inner { height: 200px; }
+            .nav-auth .btn-outline { display: none; }
+        }
+        @media (max-width: 380px) {
+            .btn-brand, .btn-outline { padding: 7px 14px; font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="/welcome/">Welcome</a>
-        <a href="/menu/">Menu</a>
-        <a href="/deals/">Deals</a> 
-        <a href="/cart/">Cart</a>
-        <a href="/about_us/">About us</a>
-    </nav>
+<div class="topnav">
+    <div class="nav-hamburger" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links">
+        <a href="{% url 'welcome' %}">Welcome</a>
+        <a href="{% url 'menu' %}">Menu</a>
+        <a href="{% url 'deals' %}">Deals</a>
+        <a href="{% url 'view_cart' %}">Cart</a>
+        <a href="{% url 'about_us' %}">About Us</a>
+    </div>
+    <div class="nav-auth">
+        <a href="{% url 'login' %}" class="btn-brand">Login</a>
+        <a href="{% url 'signup' %}" class="btn-brand">Sign Up</a>
+    </div>
+</div>
 
-    <div class="welcome-header">
-        <img src="{% static 'cafe/logo.jpg' %}" style="width: 100px; border-radius: 50%;">
-        <div style="font-size: 16px; color: #666; letter-spacing: 3px; margin-top: 15px;">WELCOME TO</div>
-        <div class="urdu-title">کوئٹہ محفل چائے خانہ</div>
+<div id="leftSidebar" style="position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #b71c1c; z-index: 10005; transition: 0.3s ease; padding-top: 20px; box-shadow: 2px 0px 10px rgba(0,0,0,0.3); box-sizing: border-box;">
+    <div onclick="toggleSidebar()" style="color: #ffffff; font-size: 24px; position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: bold;">&times;</div>
+    <div style="margin-top: 60px; display: flex; flex-direction: column; text-align: left;">
+        <a href="{% url 'welcome' %}" style="color: white; background-color: rgba(255,255,255,0.1); padding: 15px 25px; text-decoration: none; font-size: 16px; font-weight: 500; border-left: 4px solid #ffffff;">Welcome</a>
+        <a href="{% url 'menu' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 16px; font-weight: 500;">Menu</a>
+        <a href="{% url 'deals' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 16px; font-weight: 500;">Deals</a>
+        <a href="{% url 'view_cart' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 16px; font-weight: 500;">Cart</a>
+        <a href="{% url 'about_us' %}" style="color: white; padding: 15px 25px; text-decoration: none; font-size: 16px; font-weight: 500;">About Us</a>
+        </div>
+</div>
+<div id="sidebarOverlay" onclick="toggleSidebar()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); z-index: 10004;"></div>
+
+<div style="padding-bottom: 20px;">
+
+    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px; padding: 0 20px;">
+        <img src="{% static 'cafe/logo.jpg' %}" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d32f2f; margin-bottom: 16px;">
+        <div style="font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #f10606;">Welcome to</div>
+        <h1 class="urdu" style="color: #d32f2f; font-size: 36px; font-weight: 700; margin: 8px 0;">کوئٹہ محفل چائے خانہ</h1>
     </div>
 
-    <div class="category-container">
-        <a href="/menu/#chai" class="cat-item">
-            <div class="cat-circle"><img src="{% static 'cafe/chai_cup.png' %}"></div>
-            <div style="font-weight:bold;">KHAAS CHAI</div>
-        </a>
-        <a href="/menu/#meetha" class="cat-item">
-            <div class="cat-circle"><img src="{% static 'cafe/meetha.jpeg' %}"></div>
-            <div style="font-weight:bold;">MEETHA PARATHA</div>
-        </a>
-        <a href="/menu/#masala" class="cat-item">
-            <div class="cat-circle"><img src="{% static 'cafe/masala.jpg' %}"></div>
-            <div style="font-weight:bold;">MASALA PARATHA</div>
-        </a>
-        <a href="/menu/#omelette" class="cat-item">
-            <div class="cat-circle"><img src="{% static 'cafe/omelette.jpeg' %}"></div>
-            <div style="font-weight:bold;">OMELETTES</div>
-        </a>
+    <div class="carousel" id="carousel">
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide">
+                <img src="{% static 'cafe/slide1_chai.jpg' %}" alt="Kulhad Chai">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'cafe/slide2_chai.jpg' %}" alt="Special Chai">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'cafe/slide3_paratha.jpg' %}" alt="Cheese Paratha">
+            </div>
+        </div>
+        <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
     </div>
 
-<a href="{% url 'login' %}" class="btn-order">LOG IN TO ORDER</a>
-    
+    <div class="categories-wrap">
+        <div class="categories-title">Explore Our <span>Categories</span></div>
+        <div class="categories-grid">
+            <a href="{% url 'menu' %}#chai" class="category-card">
+                <img src="{% static 'cafe/chai_cup.png' %}" alt="Khaas Chai">
+                <h6>Khaas Chai</h6>
+            </a>
+            <a href="{% url 'menu' %}#meetha" class="category-card">
+                <img src="{% static 'cafe/meetha.jpeg' %}" alt="Meetha Paratha">
+                <h6>Meetha Paratha</h6>
+            </a>
+            <a href="{% url 'menu' %}#masala" class="category-card">
+                <img src="{% static 'cafe/masala.jpg' %}" alt="Masala Paratha">
+                <h6>Masala Paratha</h6>
+            </a>
+            <a href="{% url 'menu' %}#omelette" class="category-card">
+                <img src="{% static 'cafe/omelette.jpeg' %}" alt="Omelettes">
+                <h6>Omelettes</h6>
+            </a>
+        </div>
+    </div>
+
+    <div class="blur-banner">
+       <div class="blur-banner-inner" style="background-image: url('{% static 'cafe/chai_banner.jpg' %}');">
+            <div class="blur-overlay"></div>
+            <div class="blur-content">
+                <h2>کوئٹہ محفل چائے خانہ</h2>
+                <p>سکون کی تلاش ہے؟ تو آئیے، ہماری محفل میں بیٹھیں۔</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="timing-bar">
+        <div class="timing-item">
+            <div style="font-size: 22px;"></div>
+            <h6>Opening Hours</h6>
+            <p>Monday - Sunday: 24 hours avalibable </p>
+        </div>
+        <div class="timing-item">
+            <div style="font-size: 22px;"></div>
+            <h6>Location</h6>
+            <p>Kashmir Road W block, People Colony Gujranwala, Pakistan</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleSidebar() {
+        var sidebar = document.getElementById("leftSidebar");
+        var overlay = document.getElementById("sidebarOverlay");
+        if (sidebar.style.left === "0px") {
+            sidebar.style.left = "-250px";
+            overlay.style.display = "none";
+        } else {
+            sidebar.style.left = "0px";
+            overlay.style.display = "block";
+        }
+    }
+
+    var currentSlide = 0;
+    var totalSlides = 3;
+    var track = document.getElementById("carouselTrack");
+
+    function moveSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = totalSlides - 1;
+        if (currentSlide >= totalSlides) currentSlide = 0;
+        track.style.transform = "translateX(" + (-currentSlide * 100) + "%)";
+    }
+
+    setInterval(function() {
+        moveSlide(1);
+    }, 3000);
+</script>
 
 </body>
 </html>
