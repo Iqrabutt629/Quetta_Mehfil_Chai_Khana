@@ -34,7 +34,9 @@ def send_email_via_brevo(subject, message, to_email):
         "subject": subject,
         "htmlContent": f"<p>{message}</p>"
     }
-    requests.post(url, json=data, headers=headers)
+    response = requests.post(url, json=data, headers=headers)
+    print(f"BREVO EMAIL STATUS: {response.status_code}")
+    print(f"BREVO EMAIL RESPONSE: {response.text}")
 
 def is_strong_password(password):
     if len(password) < 8:

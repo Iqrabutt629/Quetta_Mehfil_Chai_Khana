@@ -110,15 +110,15 @@ STORAGES = {
     'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'},
 }
 import os
-
+from dotenv import load_dotenv
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = 'login'
-BREVO_API_KEY = os.environ.get(
-    'BREVO_API_KEY',
-    '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'
-)
+
+load_dotenv()
+EMAIL_HOST_PASSWORD = os.getenv('BREVO_API_KEY')
+
 DEFAULT_FROM_EMAIL = 'quettamehfilchaikhana90@gmail.com'
 
 STRIPE_PUBLISHABLE_KEY = "pk_test_51UEC2OPF7wHpvTuBjYx7o4t5KVXzYehjO328BvPaM9fYzUmIlenBZO7emBpCvvcHGOZyt6HDYpbD89rSDQOxZTPY00rQgEZ2Jp"
