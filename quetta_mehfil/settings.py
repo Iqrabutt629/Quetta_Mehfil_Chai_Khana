@@ -20,9 +20,17 @@ SECRET_KEY = 'django-insecure-0kzyv$one7l=t(uqvhry8^)srs0pr=i$kw@nr1q1r_o3g!kz2i
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'quettamehfilchaikhana.com',
+    'www.quettamehfilchaikhana.com',
+    'web-production-9769e.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+    ]
 
 CSRF_TRUSTED_ORIGINS = [
+    'https://quettamehfilchaikhana.com',
+    'https://www.quettamehfilchaikhana.com',
     'https://web-production-9769e.up.railway.app',
 ]
 
