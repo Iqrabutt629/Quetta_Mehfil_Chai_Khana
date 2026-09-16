@@ -77,12 +77,12 @@
                     {% endif %}
                     <strong>{{ item.name }}</strong>
                 </td>
-                <td style="padding: 15px; text-align: center;">Rs. {{ item.price }}</td>
                 <td style="padding: 15px; text-align: center;">
                     <a href="{% url 'decrease_cart_item' item.name %}" style="display: inline-block; width: 26px; height: 26px; line-height: 26px; text-align: center; background: #eee; color: #333; text-decoration: none; border-radius: 5px; font-weight: bold;">−</a>
                     <span style="margin: 0 10px; font-weight: bold;">{{ item.quantity }}</span>
                     <a href="{% url 'increase_cart_item' item.name %}" style="display: inline-block; width: 26px; height: 26px; line-height: 26px; text-align: center; background: #d32f2f; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">+</a>
                 </td>
+                <td style="padding: 15px; text-align: center;">Rs. {{ item.subtotal }}</td>
                 <td style="padding: 15px; text-align: center;">
                     <a href="{% url 'remove_from_cart' item.name %}" style="color: #d32f2f; text-decoration: none; font-weight: bold;">
                          Remove
