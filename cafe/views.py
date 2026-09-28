@@ -288,6 +288,7 @@ def order_form_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         phone = request.POST.get('phone')
+        email = request.POST.get('email')          # 👈 YE ADD KAREIN
         pickup_hour = request.POST.get('pickup_hour')
         pickup_minute = request.POST.get('pickup_minute')
         payment_method = request.POST.get('payment_method')
@@ -325,6 +326,7 @@ def order_form_view(request):
         order = Order.objects.create(
             customer_name=name,
             phone=phone,
+            email=email,                           
             order_list=order_list,
             total_amount=total_amount,
             picking_time=picking_time,
@@ -333,6 +335,20 @@ def order_form_view(request):
             amount_paid=amount_paid,
         )
 
+       
+        if email:
+            send_email_via_brevo(
+                'Order Confirmation - Quetta Mehfil Chai Khana',
+                f'Assalam-o-Alaikum {name},\n\n'
+                f'Aapka order #{order.id} confirm ho gaya hai.\n'
+                f'Total Amount: Rs. {total_amount}\n'
+                f'Pickup Time: {picking_time}\n'
+                f'Payment Method: {payment_method.upper()}\n'
+                f'Amount Paid: Rs. {amount_paid}\n\n'
+                f'Shukriya! Quetta Mehfil Chai Khana',
+                email
+            )
+
         request.session['last_ordered_items'] = [x.strip().rsplit(' x', 1)[0] for x in order_list.split(',')]
         request.session['cart'] = {}
         request.session.modified = True
@@ -340,6 +356,7 @@ def order_form_view(request):
         if order.payment_method == 'stripe':
             return redirect('stripe_checkout', order_id=order.id)
         return redirect('order_success', order_id=order.id)
+    
 
     if 'item' in request.GET:
         item_name = request.GET.get('item', '')

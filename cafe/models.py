@@ -4,6 +4,7 @@ from django.db import models
 class Order(models.Model):
     customer_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
+    email = models.EmailField(blank=True, null=True)
     order_list = models.TextField() 
     total_amount = models.IntegerField(default=0)
     order_time = models.DateTimeField(auto_now_add=True) 
