@@ -7,12 +7,13 @@ class MenuItemAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'category', 'image')
     list_filter = ('category',)
     search_fields = ('name',)
-    list_editable = ('price', 'category')       
+    list_editable = ('price', 'category')
     fields = ('name', 'price', 'image', 'category')
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    
+
     list_display = (
         'id', 'customer_name', 'phone', 'email',
         'total_amount', 'amount_paid', 'pending_amount',
@@ -47,7 +48,9 @@ class OrderAdmin(admin.ModelAdmin):
         return False
 
     def has_add_permission(self, request):
-        return False         
-    @admin.register(Deal)
+        return False
+
+
+@admin.register(Deal)
 class DealAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'price', 'description')
