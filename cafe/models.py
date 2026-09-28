@@ -1,19 +1,17 @@
 from django.db import models
-from django.db import models
 
-from django.db import models
 
 class Order(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True) # <-- Ye field lazmi add karni hai
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
     customer_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
     email = models.EmailField(blank=True, null=True)
-    order_list = models.TextField() 
+    order_list = models.TextField()
     total_amount = models.IntegerField(default=0)
-    order_time = models.DateTimeField(auto_now_add=True) 
+    order_time = models.DateTimeField(auto_now_add=True)
     picking_time = models.CharField(max_length=50)
-    payment_method = models.CharField(max_length=20, default='cash')   
-    payment_type = models.CharField(max_length=20, default='full') 
+    payment_method = models.CharField(max_length=20, default='cash')
+    payment_type = models.CharField(max_length=20, default='full')
     amount_paid = models.IntegerField(default=0)
     status = models.CharField(max_length=20, choices=[
         ('pending', 'Pending'),
@@ -21,16 +19,26 @@ class Order(models.Model):
         ('picked_up', 'Picked Up'),
         ('cancelled', 'Cancelled'),
     ], default='pending')
-    
+
+    # 👇 Ye method add kiya — status lock ke liye
+    def save(self, *args, **kwargs):
+        if self.pk:
+            old_order = Order.objects.filter(pk=self.pk).first()
+            if old_order and old_order.status in ['picked_up', 'cancelled']:
+                self.status = old_order.status
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.customer_name} - {self.total_amount}"
-    
+
+
 class Favourites(models.Model):
-    user= models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     item_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.item_name
+
 
 class MenuItem(models.Model):
     CATEGORY_CHOICES = [
@@ -47,7 +55,8 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 class Deal(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -57,9 +66,11 @@ class Deal(models.Model):
     def __str__(self):
         return self.title
 
+
 import random
 from django.utils import timezone
 from datetime import timedelta
+
 
 class PasswordResetCode(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
@@ -73,6 +84,10 @@ class PasswordResetCode(models.Model):
     def generate_code():
         return str(random.randint(100000, 999999))
 
+
+# ============================================
+# SIGNALS — Menu/Deal delete hone par order cancel + email
+# ============================================
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
@@ -91,17 +106,17 @@ def deal_deleted(sender, instance, **kwargs):
 
 def _cancel_orders_for_item(item_name):
     """Helper function: item name se matching pending orders cancel karein."""
-    from .views import send_email_via_brevo      
+    from .views import send_email_via_brevo
 
     pending_orders = Order.objects.filter(
         order_list__icontains=item_name,
         status='pending'
     )
-    
+
     for order in pending_orders:
         order.status = 'cancelled'
         order.save()
-        
+
         if order.email:
             send_email_via_brevo(
                 f'Order #{order.id} Cancelled - Quetta Mehfil',
