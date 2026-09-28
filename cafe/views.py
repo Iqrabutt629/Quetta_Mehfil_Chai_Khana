@@ -288,7 +288,7 @@ def order_form_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         phone = request.POST.get('phone')
-        email = request.POST.get('email')          # 👈 YE ADD KAREIN
+        email = request.POST.get('email')          
         pickup_hour = request.POST.get('pickup_hour')
         pickup_minute = request.POST.get('pickup_minute')
         payment_method = request.POST.get('payment_method')
@@ -324,9 +324,10 @@ def order_form_view(request):
                 amount_paid = 0
 
         order = Order.objects.create(
+            user=request.user,  
             customer_name=name,
             phone=phone,
-            email=email,                           
+            email=email,                                        
             order_list=order_list,
             total_amount=total_amount,
             picking_time=picking_time,
@@ -530,3 +531,8 @@ def stripe_checkout_view(request, order_id):
 
 def payment_cancel_view(request, order_id):
     return render(request, 'cafe/payment_cancel.html', {'order_id': order_id})
+
+@login_required
+def order_history_view(request):
+    orders = Order.objects.filter(user=request.user).order_by('-order_time')
+    return render(request, 'cafe/order_history.html', {'orders': orders})

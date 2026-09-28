@@ -1,7 +1,10 @@
 from django.db import models
 from django.db import models
 
+from django.db import models
+
 class Order(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True) # <-- Ye field lazmi add karni hai
     customer_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
     email = models.EmailField(blank=True, null=True)
@@ -16,6 +19,7 @@ class Order(models.Model):
         ('pending', 'Pending'),
         ('prepared', 'Prepared'),
         ('picked_up', 'Picked Up'),
+        ('cancelled', 'Cancelled'),
     ], default='pending')
     
     def __str__(self):
@@ -68,3 +72,43 @@ class PasswordResetCode(models.Model):
     @staticmethod
     def generate_code():
         return str(random.randint(100000, 999999))
+
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
+
+@receiver(pre_delete, sender=MenuItem)
+def menu_item_deleted(sender, instance, **kwargs):
+    """Jab MenuItem delete ho, to pending orders cancel karein aur email bhejein."""
+    _cancel_orders_for_item(instance.name)
+
+
+@receiver(pre_delete, sender=Deal)
+def deal_deleted(sender, instance, **kwargs):
+    """Jab Deal delete ho, to pending orders cancel karein aur email bhejein."""
+    _cancel_orders_for_item(instance.title)
+
+
+def _cancel_orders_for_item(item_name):
+    """Helper function: item name se matching pending orders cancel karein."""
+    from .views import send_email_via_brevo      
+
+    pending_orders = Order.objects.filter(
+        order_list__icontains=item_name,
+        status='pending'
+    )
+    
+    for order in pending_orders:
+        order.status = 'cancelled'
+        order.save()
+        
+        if order.email:
+            send_email_via_brevo(
+                f'Order #{order.id} Cancelled - Quetta Mehfil',
+                f'Assalam-o-Alaikum {order.customer_name},\n\n'
+                f'Humein maazrat hai. Aapka order #{order.id} cancel ho gaya hai '
+                f'kyunki "{item_name}" ab available nahi hai.\n\n'
+                f'Aap dobara order kar sakte hain.\n\n'
+                f'Shukriya!\nQuetta Mehfil Chai Khana',
+                order.email
+            )

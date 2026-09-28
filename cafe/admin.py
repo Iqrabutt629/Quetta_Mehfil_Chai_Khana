@@ -10,16 +10,9 @@ class MenuItemAdmin(admin.ModelAdmin):
     list_editable = ('price', 'category')       
     fields = ('name', 'price', 'image', 'category')
 
-@admin.register(Deal)
-class DealAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'price', 'description')
-    search_fields = ('title',)
-    list_editable = ('price',)                  
-    fields = ('title', 'description', 'price', 'image')
-
-
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    
     list_display = (
         'id', 'customer_name', 'phone', 'email',
         'total_amount', 'amount_paid', 'pending_amount',
@@ -28,47 +21,30 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
     list_editable = ('status',)
-
-    
     list_filter = ('status', 'payment_method', 'payment_type', 'order_time')
-
-   
     search_fields = ('customer_name', 'phone', 'email', 'id')
 
     readonly_fields = (
-        'customer_name',
-        'phone',
-        'email',
-        'order_list',
-        'total_amount',
-        'amount_paid',
-        'payment_method',
-        'payment_type',
-        'picking_time',
-        'order_time',
+        'customer_name', 'phone', 'email',
+        'order_list', 'total_amount', 'amount_paid',
+        'payment_method', 'payment_type',
+        'picking_time', 'order_time',
     )
 
     fields = (
-        'customer_name',
-        'phone',
-        'email',
-        'order_list',
-        'total_amount',
-        'amount_paid',
-        'payment_method',
-        'payment_type',
-        'picking_time',
-        'order_time',
-        'status',            
+        'customer_name', 'phone', 'email',
+        'order_list', 'total_amount', 'amount_paid',
+        'payment_method', 'payment_type',
+        'picking_time', 'order_time',
+        'status',
     )
 
-    
     def pending_amount(self, obj):
         return obj.total_amount - obj.amount_paid
     pending_amount.short_description = 'Pending (Rs.)'
 
-   
     def has_delete_permission(self, request, obj=None):
-        return False           
+        return False
+
     def has_add_permission(self, request):
-        return False          
+        return False         
