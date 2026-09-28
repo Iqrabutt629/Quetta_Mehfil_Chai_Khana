@@ -48,3 +48,6 @@ class OrderAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False         
+    @admin.register(Deal)
+class DealAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'price', 'description')
